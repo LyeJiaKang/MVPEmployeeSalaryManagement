@@ -26,6 +26,8 @@ public class UserServiceImpl implements UserService{
 		
 		List<User> userList = new ArrayList<User>();
 		boolean checkFile = false;
+		boolean duplicatedLogin = false;
+		boolean result = false;
 		if(!file.isEmpty()) {
 			BufferedReader br;
 			try {
@@ -35,7 +37,6 @@ public class UserServiceImpl implements UserService{
 			     br = new BufferedReader(new InputStreamReader(is));
 			     int totalLine = 1;
 			     while ((line = br.readLine()) != null) {
-			    	 checkFile = false;
 			    	 if(totalLine != 1) {
 			    		 char firstChar = line.charAt(0); 
 				    	 if(firstChar != '#') {
@@ -46,6 +47,7 @@ public class UserServiceImpl implements UserService{
 				    			 checkFile = true;
 				    			 
 				    		 }else {
+				    			 checkFile = false;
 				    			 break;
 				    		 }
 				    	 }
@@ -54,18 +56,31 @@ public class UserServiceImpl implements UserService{
 			         totalLine++;
 			     }
 			     if(checkFile&&!userList.isEmpty()) {
+			    	 
 			    	 for(User u: userList) {
-			    		userRepo.save(u);
+			    		 for(User u2: userList) {
+			    			 if(u.getLogin().equals(u2.getLogin())) {
+			    				 if(!u.getId().equals(u2.getId())) {
+			    					 duplicatedLogin = true;
+			    					 break;
+			    				 }
+			    			 }
+					    }
+			    	 }
+			    	 if(!duplicatedLogin) {
+			    		 for(User u: userList) {
+			    			 userRepo.save(u);
+				    	 }
+			    		 result = true;
 			    	 }
 			     }
-
 			  } catch (IOException e) {
 			    System.err.println(e.getMessage());       
 			  }
 		}
 		
 		
-		return checkFile;
+		return result;
 	}
 	
 	public boolean checkRecord(String record) {
@@ -79,7 +94,12 @@ public class UserServiceImpl implements UserService{
 				if(salaryStringArray[1].length() == 2) {
 					double salary = Double.parseDouble(stringRecordArray[3]);
 					if(salary >= 0) {
-						result = true;
+						User user = userRepo.findBylogin(stringRecordArray[1]);
+						if(user == null) {
+							result = true;
+						}else if (user.getId().equals(stringRecordArray[0])) {
+							result = true;
+						}
 					}
 				}
 			}catch(Exception ex) {
