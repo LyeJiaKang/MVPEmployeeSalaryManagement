@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,11 @@ public class UserServiceImpl implements UserService{
 	public synchronized boolean uploadFile(MultipartFile file) {
 		
 		List<User> userList = new ArrayList<User>();
+   	 	ArrayList<String> tempLoginList = new ArrayList<String>();
+   	 	ArrayList<String> tempIdList = new ArrayList<String>();
 		boolean checkFile = false;
 		boolean duplicatedLogin = false;
+		boolean duplicatedId = false;
 		boolean result = false;
 		if(!file.isEmpty()) {
 			BufferedReader br;
@@ -44,35 +49,37 @@ public class UserServiceImpl implements UserService{
 				    			 String[] stringRecordArray = line.split(",");
 				    			 User userEntity = new User(stringRecordArray[0],stringRecordArray[1],stringRecordArray[2],Double.parseDouble(stringRecordArray[3]));
 				    			 userList.add(userEntity);
+				    			 tempLoginList.add(stringRecordArray[0]);
+				    			 tempIdList.add(stringRecordArray[1]);
 				    			 checkFile = true;
-				    			 
 				    		 }else {
 				    			 checkFile = false;
 				    			 break;
 				    		 }
+				    		 
 				    	 }
 			    	 }
 			    	 
 			         totalLine++;
 			     }
-			     if(checkFile&&!userList.isEmpty()) {
-			    	 
-			    	 for(User u: userList) {
-			    		 for(User u2: userList) {
-			    			 if(u.getLogin().equals(u2.getLogin())) {
-			    				 if(!u.getId().equals(u2.getId())) {
-			    					 duplicatedLogin = true;
-			    					 break;
-			    				 }
-			    			 }
-					    }
-			    	 }
-			    	 if(!duplicatedLogin) {
+			     
+			     Set<String> tempLoginSet = new HashSet<String>(tempLoginList);
+			     Set<String> tempIdSet = new HashSet<String>(tempIdList);
+			     
+			     if(tempLoginSet.size() != userList.size()) {
+			    	 duplicatedLogin = true;
+			     }
+			     
+			     if(tempIdSet.size() != userList.size()) {
+			    	 duplicatedId = true;
+			     }
+			     
+			     if(!duplicatedLogin&&!duplicatedId&&checkFile&&!userList.isEmpty()) {
 			    		 for(User u: userList) {
 			    			 userRepo.save(u);
 				    	 }
 			    		 result = true;
-			    	 }
+			    	 
 			     }
 			  } catch (IOException e) {
 			    System.err.println(e.getMessage());       
