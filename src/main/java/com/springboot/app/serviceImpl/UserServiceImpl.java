@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService{
 
 			     String line;
 			     InputStream is = file.getInputStream();
-			     br = new BufferedReader(new InputStreamReader(is));
+			     br = new BufferedReader(new InputStreamReader(is,StandardCharsets.UTF_8));
 			     int totalLine = 1;
 			     while ((line = br.readLine()) != null) {
 			    	 if(totalLine != 1) {
@@ -66,10 +67,12 @@ public class UserServiceImpl implements UserService{
 			     Set<String> tempLoginSet = new HashSet<String>(tempLoginList);
 			     Set<String> tempIdSet = new HashSet<String>(tempIdList);
 			     
+			     //check duplicate Login
 			     if(tempLoginSet.size() != userList.size()) {
 			    	 duplicatedLogin = true;
 			     }
 			     
+			     //check duplicate Id
 			     if(tempIdSet.size() != userList.size()) {
 			    	 duplicatedId = true;
 			     }
