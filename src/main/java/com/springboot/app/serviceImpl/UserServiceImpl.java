@@ -120,4 +120,32 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	@Override
+	public List<User> getUsers(double minSalary, double maxSalary, int offset, int limit, String sort) {
+		
+		List<User> result = new ArrayList<User>();
+		char character = sort.charAt(0);    
+		int ascii = (int) character;
+		int sortColumn = 0;
+		if (sort.substring(1, sort.length()).equals("id")) {
+			sortColumn = 1;
+		}else if (sort.substring(1, sort.length()).equals("login")) {
+			sortColumn = 2;
+		}else if (sort.substring(1, sort.length()).equals("name")) {
+			sortColumn = 3;
+		}else if (sort.substring(1, sort.length()).equals("salary")) {
+			sortColumn = 4;
+		}
+		
+		if(ascii == 43) {
+			result= userRepo.findUsersAscOrder(minSalary,maxSalary,sortColumn,offset,limit);
+		}else {
+			
+			result= userRepo.findUsersDescOrder(minSalary,maxSalary,sortColumn,offset,limit);
+		}
+		
+		
+		return result;
+	}
+
 }

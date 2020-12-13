@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.hamcrest.Matchers.is;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 @SpringBootTest
 public class UserTest {
@@ -37,8 +38,12 @@ public class UserTest {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 
 		String fileName = "01_test_data.csv";
+		
+		
 		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
-
+		
+		
+		
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
 		mockMvc.perform(MockMvcRequestBuilders.multipart("/user/upload").file(file)).andExpect(ok)
