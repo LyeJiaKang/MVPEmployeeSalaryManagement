@@ -35,16 +35,16 @@ public class UserServiceImpl implements UserService{
 		boolean duplicatedId = false;
 		boolean result = false;
 		if(!file.isEmpty()) {
+			
 			BufferedReader br;
 			try {
-
 			     String line;
 			     InputStream is = file.getInputStream();
 			     br = new BufferedReader(new InputStreamReader(is,StandardCharsets.UTF_8));
 			     int totalLine = 1;
 			     while ((line = br.readLine()) != null) {
 			    	 if(totalLine != 1) {
-			    		 char firstChar = line.charAt(0); 
+			    		 char firstChar = line.charAt(0);
 				    	 if(firstChar != '#') {
 				    		 if(checkRecord(line)) {
 				    			 String[] stringRecordArray = line.split(",");

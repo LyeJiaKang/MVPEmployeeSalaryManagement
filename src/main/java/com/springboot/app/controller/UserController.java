@@ -1,5 +1,6 @@
 package com.springboot.app.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +36,9 @@ public class UserController {
 		return userRepo.findById(id);
 	}
 	
+	@CrossOrigin(origins="http://localhost:4200")
+	@GetMapping("/users")
+	public List<User> getAllUser(){
+		return (List<User>) userRepo.findAll();
+	}
 }
