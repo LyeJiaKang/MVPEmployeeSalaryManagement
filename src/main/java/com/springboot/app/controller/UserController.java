@@ -42,12 +42,12 @@ public class UserController {
 	
 	@CrossOrigin(origins="http://localhost:4200")
 	@GetMapping("/users")
-	public ResponseEntity<List<User>> getUsers(@RequestParam("minSalary") double minSalary,@RequestParam("maxSalary") double maxSalary
-			,@RequestParam("offset") int offset,@RequestParam("limit") int limit,@RequestParam("sort") String sort){
+	public ResponseEntity<List<User>> getUsers(@RequestParam("minSalary") Double minSalary,@RequestParam("maxSalary") Double maxSalary
+			,@RequestParam("offset") Integer offset,@RequestParam("limit") Integer limit,@RequestParam("sort") String sort){
 		
 			List<User> result = new ArrayList<User>();
 			HttpStatus status = null;
-		if(minSalary < 0 || maxSalary < 0 || offset < 0 || limit < 0 || sort == null) {
+		if(minSalary ==null || maxSalary ==null || offset ==null || limit ==null || minSalary < 0 || maxSalary < 0 || offset < 0 || limit < 0 || sort == null || minSalary>maxSalary) {
 			status = HttpStatus.BAD_REQUEST;
 		}else {
 			

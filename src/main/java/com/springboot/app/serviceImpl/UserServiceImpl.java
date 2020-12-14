@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService{
 					}
 				}
 			}catch(Exception ex) {
-				System.out.println(ex.getMessage());
+				System.err.println(ex.getMessage());
 			}
 		}
 		
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> getUsers(double minSalary, double maxSalary, int offset, int limit, String sort) {
+	public List<User> getUsers(Double minSalary, Double maxSalary, Integer offset, Integer limit, String sort) {
 		
 		List<User> result = new ArrayList<User>();
 		char character = sort.charAt(0);    

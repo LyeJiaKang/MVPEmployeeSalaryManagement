@@ -1,9 +1,10 @@
 package com.springboot.app.test;
 
-import org.junit.jupiter.api.Order;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.annotation.Order;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -16,14 +17,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.hamcrest.Matchers.is;
 
 import java.io.FileInputStream;
-import java.io.InputStream;
 
 @SpringBootTest
-public class UserTest {
+public class User_Story_1_UserTest {
 
-	// Sample test files in
-	// springboot-app\\target\\test-classes\\com\\springboot\a\pp\\test\\test_data_file
-	final String pathOfTheCurrentClass = this.getClass().getResource(".").getPath() + "test_data_file/";
+	// Change to your Sample test files directory and assign to inputFileDir (absolute directory)
+	final String inputFileDir = this.getClass().getResource(".").getPath() + "test_data_file/";
 	@Autowired
 	private WebApplicationContext userController;
 
@@ -40,7 +39,7 @@ public class UserTest {
 		String fileName = "01_test_data.csv";
 		
 		
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 		
 		
 		
@@ -73,7 +72,7 @@ public class UserTest {
 	public void uploadUserFileUpdateExistingRecord() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "02_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
@@ -101,7 +100,7 @@ public class UserTest {
 	public void uploadUserEmptyFile() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "03_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
@@ -119,7 +118,7 @@ public class UserTest {
 	public void uploadUserMoreThan4Columns() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "04_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
@@ -137,7 +136,7 @@ public class UserTest {
 	public void uploadUserLessThan4Columns() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "05_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
@@ -156,7 +155,7 @@ public class UserTest {
 	public void uploadUserSalaryMoreThan2DecimalPlaces() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "06_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
@@ -175,7 +174,7 @@ public class UserTest {
 	public void uploadUserSalaryOneDecimalPlaces() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "07_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
@@ -194,7 +193,7 @@ public class UserTest {
 	public void uploadUserNegativeSalaryValue() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "08_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
@@ -213,7 +212,7 @@ public class UserTest {
 	public void uploadUserInvalidSalaryValue() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "09_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
@@ -231,7 +230,7 @@ public class UserTest {
 	public void uploadUserNonEnglishCharacters() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
 		String fileName = "10_test_data.csv";
-		FileInputStream fis = new FileInputStream(pathOfTheCurrentClass + fileName);
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
 
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
