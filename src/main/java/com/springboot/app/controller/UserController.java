@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.springboot.app.domain.User;
 import com.springboot.app.repository.UserRepository;
 import com.springboot.app.service.UserService;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class UserController {
 	
@@ -28,38 +33,39 @@ public class UserController {
 	@Autowired
 	UserRepository userRepo;
 
-	@CrossOrigin(origins="http://localhost:4200")
 	@PostMapping("/user/upload")
-	public boolean uploadUserFile(@RequestParam("file") MultipartFile file){
+	public boolean uploadUserFile(@RequestBody @RequestParam("file") MultipartFile file){
 		return userService.uploadFile(file);
 	}
 	
-	@CrossOrigin(origins="http://localhost:4200")
+
 	@GetMapping("/user")
 	public Optional<User> getUser(@RequestParam("id") String id){
 		return userRepo.findById(id);
 	}
 	
-	@CrossOrigin(origins="http://localhost:4200")
+
 	@GetMapping("/users")
-	public ResponseEntity<List<User>> getUsers(@RequestParam("minSalary") Double minSalary,@RequestParam("maxSalary") Double maxSalary
-			,@RequestParam("offset") Integer offset,@RequestParam("limit") Integer limit,@RequestParam("sort") String sort){
+	public ResponseEntity<List<User>> getUsers(@PositiveOrZero @RequestParam("minSalary") Double minSalary, @PositiveOrZero @RequestParam("maxSalary") Double maxSalary
+			,@PositiveOrZero @RequestParam("offset") Integer offset, @Positive @RequestParam("limit") Integer limit,@NotBlank @RequestParam("sort") String sort){
 		
 			List<User> result = new ArrayList<User>();
 			HttpStatus status = null;
-		if(minSalary ==null || maxSalary ==null || offset ==null || limit ==null || minSalary < 0 || maxSalary < 0 || offset < 0 || limit < 0 || sort == null || minSalary>maxSalary) {
+			
+		if(minSalary>maxSalary) {
 			status = HttpStatus.BAD_REQUEST;
 		}else {
 			
 			char character = sort.charAt(0);    
 			int ascii = (int) character;
+			String column = sort.substring(1, sort.length());
 			//43 for + and 45 for -
 			
 			if(ascii != 43 && ascii != 45) {
 				status = HttpStatus.BAD_REQUEST;
-			}else if (sort.substring(1, sort.length()).equals("id")||sort.substring(1, sort.length()).equals("login")||sort.substring(1, sort.length()).equals("name")
-					||sort.substring(1, sort.length()).equals("salary")) {
-				result = userService.getUsers(minSalary,maxSalary,offset,limit,sort);
+			}else if (column.equals("id")||column.equals("login")||column.equals("name")
+					||column.equals("salary")) {
+				result = userService.getUsers(minSalary,maxSalary,offset,limit,column,ascii);
 				status = HttpStatus.OK;
 			}else {
 				status = HttpStatus.BAD_REQUEST;

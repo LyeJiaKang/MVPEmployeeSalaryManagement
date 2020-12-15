@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -121,27 +124,19 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> getUsers(Double minSalary, Double maxSalary, Integer offset, Integer limit, String sort) {
+	public List<User> getUsers(Double minSalary, Double maxSalary, Integer offset, Integer limit, String column, int ascii) {
 		
 		List<User> result = new ArrayList<User>();
-		char character = sort.charAt(0);    
-		int ascii = (int) character;
-		int sortColumn = 0;
-		if (sort.substring(1, sort.length()).equals("id")) {
-			sortColumn = 1;
-		}else if (sort.substring(1, sort.length()).equals("login")) {
-			sortColumn = 2;
-		}else if (sort.substring(1, sort.length()).equals("name")) {
-			sortColumn = 3;
-		}else if (sort.substring(1, sort.length()).equals("salary")) {
-			sortColumn = 4;
-		}
+		
 		
 		if(ascii == 43) {
-			result= userRepo.findUsersAscOrder(minSalary,maxSalary,sortColumn,offset,limit);
+			Pageable sortedByAsc = 
+					  PageRequest.of(offset/limit, limit, Sort.by(column).ascending());
+			result= userRepo.findAllBySalaryGreaterThanEqualAndSalaryLessThanEqual(minSalary,maxSalary,sortedByAsc);
 		}else {
-			
-			result= userRepo.findUsersDescOrder(minSalary,maxSalary,sortColumn,offset,limit);
+			Pageable sortedByDesc = 
+					  PageRequest.of(offset/limit, limit, Sort.by(column).descending());
+			result= userRepo.findAllBySalaryGreaterThanEqualAndSalaryLessThanEqual(minSalary,maxSalary,sortedByDesc);
 		}
 		
 		

@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.Order;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -15,6 +17,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileInputStream;
 
@@ -241,6 +245,35 @@ public class User_Story_1_UserTest {
 		mockMvc.perform(MockMvcRequestBuilders.get("/user?id=" + getId))
 				.andExpect(MockMvcResultMatchers.content().contentType("application/json"))
 				.andExpect(jsonPath("$.name", is("Severus Snapeβ")));
+	}
+	
+	@Test
+	@Order(10)
+	/*
+	 * Test Case 10_1 Description: To test the logic will not take in row starting with '#'
+	 * Expected Result: Record will be added to database. The row with '#' will be ignored.
+	 * row id 'e0050' will be starting with '#' and will not be added to database
+	 * row id 'e0051' will be added to database without row starting with '#'; 
+	 */
+	public void uploadUserIgnoreHexSign() throws Exception {
+		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
+		String fileName = "10_1_test_data.csv";
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
+
+		MockMultipartFile file = new MockMultipartFile("file", fis);
+		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
+		mockMvc.perform(MockMvcRequestBuilders.multipart("/user/upload").file(file)).andExpect(ok)
+				.andExpect(MockMvcResultMatchers.content().string("true"));
+
+		String getIdWithHex = "e0050";
+		mockMvc.perform(MockMvcRequestBuilders.get("/user?id=" + getIdWithHex))
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+				.andExpect(MockMvcResultMatchers.content().string("null"));
+		
+		String getId = "e0051";
+		mockMvc.perform(MockMvcRequestBuilders.get("/user?id=" + getId))
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+				.andExpect(jsonPath("$.id", is("e0051")));
 	}
 
 }
