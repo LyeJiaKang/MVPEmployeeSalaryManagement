@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.springboot.app.domain.User;
 import com.springboot.app.repository.UserRepository;
 import com.springboot.app.service.UserService;
+import com.springboot.app.utils.EnhancedPagable;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -98,29 +99,47 @@ public class UserServiceImpl implements UserService{
 	
 	public boolean checkRecord(String record) {
 		boolean result = false;
+		boolean validSalary =false;
 		String[] stringRecordArray = record.split(",");
 		//Count total tokens
 		if(stringRecordArray.length == 4) {
 			//Check Salary
 			try {
-				String[] salaryStringArray = stringRecordArray[3].split("\\.");
-				if(salaryStringArray[1].length() == 2) {
+				if(stringRecordArray[3].contains(".")) {
+					String[] salaryStringArray = stringRecordArray[3].split("\\.");
+					if(salaryStringArray[1].length() <= 2) {
+						validSalary = true;
+					}
+				}else {
+					validSalary = true;
+				}
+				
+				if(validSalary) {
 					double salary = Double.parseDouble(stringRecordArray[3]);
 					if(salary >= 0) {
-						User user = userRepo.findBylogin(stringRecordArray[1]);
-						if(user == null) {
-							result = true;
-						}else if (user.getId().equals(stringRecordArray[0])) {
-							result = true;
-						}
+						result = checkLogin(stringRecordArray[1],stringRecordArray[0]);
 					}
 				}
+				
 			}catch(Exception ex) {
 				System.err.println(ex.getMessage());
 			}
 		}
 		
 		return result;
+	}
+	
+	public boolean checkLogin(String loginId,String id) {
+		boolean validLogin = false;
+		
+		User user = userRepo.findBylogin(loginId);
+		if(user == null) {
+			validLogin = true;
+		}else if (user.getId().equals(id)) {
+			validLogin = true;
+		}
+		
+		return validLogin;
 	}
 
 	@Override
@@ -130,12 +149,13 @@ public class UserServiceImpl implements UserService{
 		
 		
 		if(ascii == 43) {
-			Pageable sortedByAsc = 
-					  PageRequest.of(offset/limit, limit, Sort.by(column).ascending());
+			//Pageable sortedByAsc = 
+					  //PageRequest.of(offset, limit, Sort.by(column).ascending());
+			Pageable sortedByAsc = new EnhancedPagable(offset.intValue(),limit.intValue(),Sort.by(column).ascending());
+			
 			result= userRepo.findAllBySalaryGreaterThanEqualAndSalaryLessThanEqual(minSalary,maxSalary,sortedByAsc);
 		}else {
-			Pageable sortedByDesc = 
-					  PageRequest.of(offset/limit, limit, Sort.by(column).descending());
+			Pageable sortedByDesc = new EnhancedPagable(offset.intValue(),limit.intValue(),Sort.by(column).descending());
 			result= userRepo.findAllBySalaryGreaterThanEqualAndSalaryLessThanEqual(minSalary,maxSalary,sortedByDesc);
 		}
 		

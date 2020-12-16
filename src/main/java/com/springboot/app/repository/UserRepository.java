@@ -11,7 +11,7 @@ public interface UserRepository extends JpaRepository<User, String>{
 
 	User findBylogin(String login);
 	
-	List<User> findAllBySalaryGreaterThanEqualAndSalaryLessThanEqual(Double minSalary,Double maxSalary, Pageable sortedByPriceDesc);
+	List<User> findAllBySalaryGreaterThanEqualAndSalaryLessThanEqual(Double minSalary,Double maxSalary, Pageable sortedBySalary);
 	
 
 }

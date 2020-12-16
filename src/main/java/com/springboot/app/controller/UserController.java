@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +20,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.springboot.app.domain.User;
 import com.springboot.app.repository.UserRepository;
 import com.springboot.app.service.UserService;
+import com.sun.istack.NotNull;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
+@Validated
 public class UserController {
 	
 	@Autowired
@@ -40,19 +44,20 @@ public class UserController {
 	
 
 	@GetMapping("/user")
-	public Optional<User> getUser(@RequestParam("id") String id){
+	public Optional<User> getUser(@NotBlank @RequestParam("id") String id){
 		return userRepo.findById(id);
 	}
 	
 
 	@GetMapping("/users")
-	public ResponseEntity<List<User>> getUsers(@PositiveOrZero @RequestParam("minSalary") Double minSalary, @PositiveOrZero @RequestParam("maxSalary") Double maxSalary
-			,@PositiveOrZero @RequestParam("offset") Integer offset, @Positive @RequestParam("limit") Integer limit,@NotBlank @RequestParam("sort") String sort){
+	public ResponseEntity<List<User>> getUsers( @Valid @NotNull @Min(0) @RequestParam("minSalary") Double minSalary,@Valid @NotNull  @RequestParam("maxSalary") Double maxSalary
+			,@Valid @NotNull @RequestParam("offset") Integer offset,  @Valid @NotNull @RequestParam("limit") Integer limit, @Valid @NotBlank @NotNull @RequestParam("sort") String sort){
 		
 			List<User> result = new ArrayList<User>();
 			HttpStatus status = null;
 			
-		if(minSalary>maxSalary) {
+			
+		if(minSalary>maxSalary||minSalary<0||maxSalary<0||offset<0||limit<1||sort.equals("")) {
 			status = HttpStatus.BAD_REQUEST;
 		}else {
 			

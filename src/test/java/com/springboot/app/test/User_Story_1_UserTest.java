@@ -171,9 +171,8 @@ public class User_Story_1_UserTest {
 	@Test
 	@Order(7)
 	/*
-	 * Test Case 07 Description: To test on one data with invalid salary and not all
-	 * rows. (Only 1 decimal place) Expected Result: No record will be added to
-	 * database. Return response with 'false'.
+	 * Test Case 07 Description: To test on one data with salary (Only 1 decimal place) 
+	 * Expected Result: record will be added to database. Return response with 'true'.
 	 */
 	public void uploadUserSalaryOneDecimalPlaces() throws Exception {
 		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
@@ -183,7 +182,7 @@ public class User_Story_1_UserTest {
 		MockMultipartFile file = new MockMultipartFile("file", fis);
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
 		mockMvc.perform(MockMvcRequestBuilders.multipart("/user/upload").file(file)).andExpect(ok)
-				.andExpect(MockMvcResultMatchers.content().string("false"));
+				.andExpect(MockMvcResultMatchers.content().string("true"));
 
 	}
 
@@ -248,7 +247,7 @@ public class User_Story_1_UserTest {
 	}
 	
 	@Test
-	@Order(10)
+	@Order(11)
 	/*
 	 * Test Case 10_1 Description: To test the logic will not take in row starting with '#'
 	 * Expected Result: Record will be added to database. The row with '#' will be ignored.
@@ -274,6 +273,24 @@ public class User_Story_1_UserTest {
 		mockMvc.perform(MockMvcRequestBuilders.get("/user?id=" + getId))
 				.andExpect(MockMvcResultMatchers.content().contentType("application/json"))
 				.andExpect(jsonPath("$.id", is("e0051")));
+	}
+	
+	@Test
+	@Order(12)
+	/*
+	 * Test Case 07 Description: To test on one data with salary (No decimal place) 
+	 * Expected Result: record will be added to database. Return response with 'true'.
+	 */
+	public void uploadUserSalaryNoDecimalPlaces() throws Exception {
+		ResultMatcher ok = MockMvcResultMatchers.status().isOk();
+		String fileName = "10_2_test_data.csv";
+		FileInputStream fis = new FileInputStream(inputFileDir + fileName);
+
+		MockMultipartFile file = new MockMultipartFile("file", fis);
+		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
+		mockMvc.perform(MockMvcRequestBuilders.multipart("/user/upload").file(file)).andExpect(ok)
+				.andExpect(MockMvcResultMatchers.content().string("true"));
+
 	}
 
 }

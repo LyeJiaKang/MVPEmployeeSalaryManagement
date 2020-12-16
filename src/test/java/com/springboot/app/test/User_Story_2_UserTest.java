@@ -199,7 +199,6 @@ public class User_Story_2_UserTest {
 	 */
 	public void getUsersNegativeLimit() throws Exception {
 		ResultMatcher badRequest = MockMvcResultMatchers.status().isBadRequest();
-
 		Double minSalary = 0.0;
 		Double maxSalary = 10000.0;
 		Integer offset = 0;
@@ -341,8 +340,7 @@ public class User_Story_2_UserTest {
 		MvcResult result = resultActions.andReturn();
 		String contentAsString = result.getResponse().getContentAsString();
 		List<User> userList = objectMapper.readValue(contentAsString, new TypeReference<List<User>>(){});
-		
-		//offset = 1, the first id will be 'e0002' to the last id of 'e0031'
+
 		assertTrue(userList.get(0).getId().equals("e0002")&& userList.get(userList.size()-1).getId().equals("e0031"));
 	}
 	
@@ -640,5 +638,41 @@ public class User_Story_2_UserTest {
 		
 		assertTrue(userList.get(0).getSalary() ==9231.79 && userList.get(userList.size()-1).getSalary() == 3075.32);
 		
+	}
+	
+	@Test
+	/*
+	 * Test Case 25 Description: To test on empty value for sorting String (E.g. "")
+	 * Expected Result: Error 400 Bad Request
+	 */
+	public void getUsersEmptySort() throws Exception {
+		ResultMatcher badRequest = MockMvcResultMatchers.status().isBadRequest();
+
+		Double minSalary = 0.0;
+		Double maxSalary = 10000.00;
+		Integer offset = 0;
+		Integer limit = 30;
+		String sort = "";
+		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
+		mockMvc.perform(MockMvcRequestBuilders.get("/users?minSalary="+minSalary+"&maxSalary="+maxSalary+"&offset="+offset+"&limit="+limit+"&sort="+sort))
+				.andExpect(badRequest);
+	}
+	
+	@Test
+	/*
+	 * Test Case 26 Description: To test on blank value for sorting String (E.g. " ")
+	 * Expected Result: Error 400 Bad Request
+	 */
+	public void getUsersBlankSort() throws Exception {
+		ResultMatcher badRequest = MockMvcResultMatchers.status().isBadRequest();
+
+		Double minSalary = 0.0;
+		Double maxSalary = 10000.00;
+		Integer offset = 0;
+		Integer limit = 30;
+		String sort = " ";
+		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(userController).build();
+		mockMvc.perform(MockMvcRequestBuilders.get("/users?minSalary="+minSalary+"&maxSalary="+maxSalary+"&offset="+offset+"&limit="+limit+"&sort="+sort))
+				.andExpect(badRequest);
 	}
 }
