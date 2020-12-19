@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.Order;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -17,8 +15,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileInputStream;
 
@@ -26,7 +22,7 @@ import java.io.FileInputStream;
 public class User_Story_1_UserTest {
 
 	// Change to your Sample test files directory and assign to inputFileDir (absolute directory)
-	final String inputFileDir = this.getClass().getResource(".").getPath() + "test_data_file/";
+	final String inputFileDir = "C:\\<youruser>\\<youruser>\\<dir>\\springboot-app\\src\\test\\resources\\test_case_files\\";
 	@Autowired
 	private WebApplicationContext userController;
 

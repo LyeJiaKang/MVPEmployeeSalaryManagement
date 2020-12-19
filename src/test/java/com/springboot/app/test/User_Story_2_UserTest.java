@@ -27,7 +27,7 @@ public class User_Story_2_UserTest {
 
 	// Change to your Sample test files directory and assign to inputFileDir
 	// (absolute directory)
-	final String inputFileDir = this.getClass().getResource(".").getPath() + "test_data_file/";
+	final String inputFileDir = "C:\\<youruser>\\<youruser>\\<dir>\\springboot-app\\src\\test\\resources\\test_case_files\\";
 	@Autowired
 	private WebApplicationContext userController;
 

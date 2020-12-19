@@ -23,7 +23,6 @@ import com.springboot.app.service.UserService;
 import com.sun.istack.NotNull;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @CrossOrigin(origins="http://localhost:4200")
@@ -50,7 +49,7 @@ public class UserController {
 	
 
 	@GetMapping("/users")
-	public ResponseEntity<List<User>> getUsers( @Valid @NotNull @Min(0) @RequestParam("minSalary") Double minSalary,@Valid @NotNull  @RequestParam("maxSalary") Double maxSalary
+	public ResponseEntity<List<User>> getUsers( @Valid @NotNull @RequestParam("minSalary") Double minSalary,@Valid @NotNull  @RequestParam("maxSalary") Double maxSalary
 			,@Valid @NotNull @RequestParam("offset") Integer offset,  @Valid @NotNull @RequestParam("limit") Integer limit, @Valid @NotBlank @NotNull @RequestParam("sort") String sort){
 		
 			List<User> result = new ArrayList<User>();
