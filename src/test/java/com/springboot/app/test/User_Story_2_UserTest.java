@@ -176,7 +176,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 07 Description: To test on negative value for offset
+	 * Test Case 08 Description: To test on negative value for offset
 	 * Expected Result: Error 400 Bad Request
 	 */
 	public void getUsersNegativeOffset() throws Exception {
@@ -194,7 +194,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 08 Description: To test on negative value for Limit
+	 * Test Case 09 Description: To test on negative value for Limit
 	 * Expected Result: Error 400 Bad Request
 	 */
 	public void getUsersNegativeLimit() throws Exception {
@@ -211,7 +211,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 09 Description: To test on minSalary is more than maxSalary
+	 * Test Case 10 Description: To test on minSalary is more than maxSalary
 	 * Expected Result: Error 400 Bad Request
 	 */
 	public void getUsersMinSalaryMoreThanMaxSalary() throws Exception {
@@ -229,7 +229,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 10 Description: To test on minSalary is equals than maxSalary
+	 * Test Case 11 Description: To test on minSalary is equals than maxSalary
 	 * Expected Result: HTTP 200 OK
 	 */
 	public void getUsersMinSalaryEqualsMaxSalary() throws Exception {
@@ -247,7 +247,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 11 Description: To test on sorting order sign that is not '+' or '-'
+	 * Test Case 12 Description: To test on sorting order sign that is not '+' or '-'
 	 * Expected Result: HTTP 200 OK
 	 */
 	public void getUsersInvalidSortingOrderSign() throws Exception {
@@ -265,7 +265,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 12 Description: To test on getting users with salary within minSalary and maxSalary range
+	 * Test Case 13 Description: To test on getting users with salary within minSalary and maxSalary range
 	 * Expected Result: HTTP 200 OK
 	 */
 	public void getUsersSalaryWithinMinSalaryAndMaxSalaryRange() throws Exception {
@@ -293,7 +293,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 13 Description: To test on getting users with correct offset range of value zero
+	 * Test Case 14 Description: To test on getting users with correct offset range of value zero
 	 * Expected Result: HTTP 200 OK
 	 * For offset = 0, the first id will be 'e0001' to the last id of 'e0030'
 	 */
@@ -320,7 +320,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 14 Description: To test on getting users with correct offset range of value one
+	 * Test Case 15 Description: To test on getting users with correct offset range of value one
 	 * Expected Result: HTTP 200 OK
 	 * For offset = 1, the first id will be 'e0002' to the last id of 'e0031'
 	 */
@@ -346,7 +346,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 15 Description: To test on getting users with correct limit range of value 30
+	 * Test Case 16 Description: To test on getting users with correct limit range of value 30
 	 * Expected Result: HTTP 200 OK
 	 * For offset = 0, the first id will be 'e0001' to the last id of 'e0030'
 	 */
@@ -375,7 +375,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 16 Description: To test on getting users with correct limit range of value 10
+	 * Test Case 17 Description: To test on getting users with correct limit range of value 10
 	 * Expected Result: HTTP 200 OK
 	 * For offset = 0, the first id will be 'e0001' to the last id of 'e0010'
 	 */
@@ -404,7 +404,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 17 Description: To test on getting users with invalid sorting column name
+	 * Test Case 18 Description: To test on getting users with invalid sorting column name
 	 * Expected Result: HTTP 400 Bad Request
 	 */
 	public void getUsersWithInvalidSortingColumnName() throws Exception {
@@ -423,7 +423,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 18 Description: To test on getting users with valid sorting column name (id) ascending order
+	 * Test Case 19 Description: To test on getting users with valid sorting column name (id) ascending order
 	 * Expected Result: HTTP 200 ok
 	 * With sorting column of 'id' in ascending order, the first id will be 'e0001' and the last id will be 'e0030'
 	 */
@@ -450,7 +450,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 18 Description: To test on getting users with valid sorting column name (id) descending order
+	 * Test Case 20 Description: To test on getting users with valid sorting column name (id) descending order
 	 * Expected Result: HTTP 200 ok
 	 * With sorting column of 'id' in descending order, the first id will be 'e0042' and the last id will be 'e0013'
 	 */
@@ -478,7 +478,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 19 Description: To test on getting users with valid sorting column name (login) ascending order
+	 * Test Case 21 Description: To test on getting users with valid sorting column name (login) ascending order
 	 * Expected Result: HTTP 200 ok
 	 * With sorting column of 'login' in ascending order, the first login will be 'carl' and the last login will be 'mickey_2'
 	 */
@@ -505,7 +505,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 20 Description: To test on getting users with valid sorting column name (login)  descending order
+	 * Test Case 22 Description: To test on getting users with valid sorting column name (login)  descending order
 	 * Expected Result: HTTP 200 ok
 	 * With sorting column of 'login' in descending order, the first login will be 'tom_3' and the last login will be 'feivel_2'
 	 */
@@ -533,7 +533,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 21 Description: To test on getting users with valid sorting column name (name)  ascending order
+	 * Test Case 23 Description: To test on getting users with valid sorting column name (name)  ascending order
 	 * Expected Result: HTTP 200 ok
 	 * With sorting column of 'name' in ascending order, the first name will be 'Carl' and the last name will be 'Mickey_2'
 	 */
@@ -561,7 +561,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 22 Description: To test on getting users with valid sorting column name (name)  descending order
+	 * Test Case 24 Description: To test on getting users with valid sorting column name (name)  descending order
 	 * Expected Result: HTTP 200 ok
 	 * With sorting column of 'name' in descending order, the first name will be 'Tom_3' and the last name will be 'Feivel_2'
 	 */
@@ -588,7 +588,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 23 Description: To test on getting users with valid sorting column name (salary)  ascending order
+	 * Test Case 25 Description: To test on getting users with valid sorting column name (salary)  ascending order
 	 * Expected Result: HTTP 200 ok
 	 * With sorting column of 'name' in ascending order, the first salary will be '1000.01' and the last salary will be '6902.86'
 	 */
@@ -615,7 +615,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 24 Description: To test on getting users with valid sorting column name (salary)  descending order
+	 * Test Case 26 Description: To test on getting users with valid sorting column name (salary)  descending order
 	 * Expected Result: HTTP 200 ok
 	 * With sorting column of 'name' in descending order, the first salary will be '9231.79' and the last salary will be '3075.32'
 	 */
@@ -642,7 +642,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 25 Description: To test on empty value for sorting String (E.g. "")
+	 * Test Case 27 Description: To test on empty value for sorting String (E.g. "")
 	 * Expected Result: Error 400 Bad Request
 	 */
 	public void getUsersEmptySort() throws Exception {
@@ -660,7 +660,7 @@ public class User_Story_2_UserTest {
 	
 	@Test
 	/*
-	 * Test Case 26 Description: To test on blank value for sorting String (E.g. " ")
+	 * Test Case 28 Description: To test on blank value for sorting String (E.g. " ")
 	 * Expected Result: Error 400 Bad Request
 	 */
 	public void getUsersBlankSort() throws Exception {
