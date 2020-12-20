@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -149,8 +148,6 @@ public class UserServiceImpl implements UserService{
 		
 		
 		if(ascii == 43) {
-			//Pageable sortedByAsc = 
-					  //PageRequest.of(offset, limit, Sort.by(column).ascending());
 			Pageable sortedByAsc = new EnhancedPagable(offset.intValue(),limit.intValue(),Sort.by(column).ascending());
 			
 			result= userRepo.findAllBySalaryGreaterThanEqualAndSalaryLessThanEqual(minSalary,maxSalary,sortedByAsc);

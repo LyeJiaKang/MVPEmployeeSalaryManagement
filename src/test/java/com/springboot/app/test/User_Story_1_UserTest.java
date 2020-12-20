@@ -130,7 +130,7 @@ public class User_Story_1_UserTest {
 	@Test
 	@Order(5)
 	/*
-	 * Test Case 04 Description: To test on data with less than 4 coloumns. Expected
+	 * Test Case 05 Description: To test on data with less than 4 coloumns. Expected
 	 * Result: No record will be added to database. Return response with 'false'.
 	 */
 	public void uploadUserLessThan4Columns() throws Exception {
