@@ -20,8 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class User_Story_1_Swapping_Login_Id {
 
 	
-	// Change to your Sample test files directory
-	final String inputFileDir = this.getClass().getResource(".").getPath() + "test_data_file/";
+	// Change to your Sample test files directory and assign to inputFileDir (absolute directory)
+	final String inputFileDir = "C:\\<youruser>\\<youruser>\\<dir>\\springboot-app\\src\\test\\resources\\test_case_files\\";
 	@Autowired
 	private WebApplicationContext userController;
 		
