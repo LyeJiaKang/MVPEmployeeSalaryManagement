@@ -1,5 +1,9 @@
 # MVPEmployeeSalaryManagement
 
+##Run with cmd
+Nagivate to springboot-app\ and insert command 'mvn spring-boot:run'
+
+##Run with IDE
 To run Spring Boot in your IDE, nagivate to src/main/java/com/springboot/app and run 'SpringbootAppApplication.java' As Java Application. 
 
 Test Cases
